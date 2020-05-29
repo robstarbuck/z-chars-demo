@@ -22,22 +22,25 @@ function App() {
 
   useEffect(() => {
     if(mode ==="encode"){
-      setToCopy(encode(subject, toEncode));
+      setToCopy(encode(subject.trim(), toEncode.trim()));
     }
     if(mode ==="decode"){
       setToCopy(decode(toDecode));
     }
   }, [mode, subject, toEncode, toDecode])
 
+
   return (
     <div className="Wall">
       <div className="App">
-        <textarea onChange={onSubjectUpdate} value={subject} />
-        <textarea onChange={onEncodeUpdate} value={toEncode} />
+        <form className={mode}>
+          <textarea className="encode" onChange={onSubjectUpdate} value={subject} />
+          <textarea className="encode" onChange={onEncodeUpdate} value={toEncode} />
 
-        <textarea value={toCopy} />
+          <textarea value={toCopy} />
 
-        <textarea onChange={onDecodeUpdate} value={toDecode} />
+          <textarea className="decode" onChange={onDecodeUpdate} value={toDecode} />
+        </form>
 
         <footer>
           <code onClick={onModeToggle}>{mode === "encode" ? "ENCODE" : "DECODE"}</code>

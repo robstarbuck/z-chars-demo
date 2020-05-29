@@ -9,19 +9,51 @@
 }
 
 .App {
-  display: flex;
-  flex: 1;
-  min-height: 300px;
-  position: relative;
+  overflow: hidden;
+  justify-content: center;
+  width: 100%;
+	/* justify-content: center; */
 }
 
-.App footer {
-  position: absolute;
-  bottom: -100%;
+footer {
+  position: fixed;
+  bottom: 100px;
   height: 40px;
 }
 
+.App form {
+  display: flex;
+  width: 133.33%;
+  position: relative;
+  transition: all ease-out 250ms;
+}
+
+.App form.encode {
+  margin-left: 0%;
+}
+
+.App form.decode {
+  margin-left: -33.33%;
+}
+
+.App form textarea {
+  opacity: 1;
+  border-radius: 20px;
+  border: 10px solid lightgray;
+  transition: opacity ease-out 250ms;
+  outline: 0;
+}
+
+.App form.decode textarea.encode {
+  opacity: 0;
+}
+
+.App form.encode textarea.decode {
+  opacity: 0;
+}
+
 .App textarea {
+  min-height: 300px;
   padding: 10px;
   flex: 1;
   margin: 0 10px;
