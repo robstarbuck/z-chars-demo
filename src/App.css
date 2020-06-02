@@ -12,12 +12,36 @@ html { font-family: 'Inter', sans-serif; }
   html { font-family: 'Inter var', sans-serif; }
 }
 
-.Wall {
+main {
+  display: flex;
+  flex-flow: column;
+  height: 100vh;
+}
+
+main > header {
+  /* width: calc(305px / 5); */
+  flex: 0 0 200px;
+  height: 200px;
+  position: relative;
+}
+
+main > div {
+  position: relative;
+  min-height: 400px;
+  flex: 1;
+}
+
+.Logo {
   position: absolute;
-  top: 20px;
-  right: 0;
-  left: 0;
-  bottom: 20px;
+  top: -200px;
+  height: 200px;
+}
+
+main > footer {
+
+}
+
+.Wall {
   display: flex;
   align-items: center;
 }
@@ -46,12 +70,6 @@ html { font-family: 'Inter', sans-serif; }
 
 .Wall > button:nth-child(2) {
   right: 0;
-}
-
-footer {
-  position: fixed;
-  bottom: 100px;
-  height: 40px;
 }
 
 form {

@@ -1,8 +1,10 @@
 import React, { useState, ChangeEvent, useEffect } from 'react';
+import { ReactComponent as Logo } from './z-chars-logo.svg';
 import './App.css';
 
 import { encode, decode } from 'z-chars';
 
+// 305 471
 
 function App() {
 
@@ -13,8 +15,6 @@ function App() {
   const [toDecode, setToDecode] = useState("");
 
   const [toCopy, setToCopy] = useState("");
-
-  const onToggleMode = () => setMode(m => m === "encode" ? "decode" : "encode")
 
   const onEncodeMode = () => setMode("encode");
   const onDecodeMode = () => setMode("decode");
@@ -33,29 +33,36 @@ function App() {
   }, [mode, subject, toEncode, toDecode])
 
   return (
-    <div className="Wall">
-
-      <button onClick={onEncodeMode}>← Encode</button>
-      <button onClick={onDecodeMode}>Decode →</button>
-
-      <div className="App">
-        <form className={mode} onSubmit={e => e.preventDefault()}>
-          <div>
-            <textarea className="encode" onChange={onSubjectUpdate} value={subject} />
-          </div>
-          <div>
-            <textarea className="encode" onChange={onEncodeUpdate} value={toEncode} />
-          </div>
-          <div>
-            <textarea className="copy" value={toCopy} />
-            <button>Copy</button>
-          </div>
-          <div>
-            <textarea className="decode" onChange={onDecodeUpdate} value={toDecode} />
-          </div>
-        </form>
+    <main>
+      <header>
+      </header>
+      
+      <div className="Wall">
+        <Logo className="Logo" />
+        <div className="App">
+          <form className={mode} onSubmit={e => e.preventDefault()}>
+            <div>
+              <textarea className="encode" onChange={onSubjectUpdate} value={subject} />
+            </div>
+            <div>
+              <textarea className="encode" onChange={onEncodeUpdate} value={toEncode} />
+            </div>
+            <div>
+              <textarea className="copy" value={toCopy} readOnly/>
+              <button>Copy</button>
+            </div>
+            <div>
+              <textarea className="decode" onChange={onDecodeUpdate} value={toDecode} />
+            </div>
+          </form>
+        </div>
       </div>
-    </div>
+
+      <footer>
+        <button onClick={onEncodeMode}>← Encode</button>
+        <button onClick={onDecodeMode}>Decode →</button>
+      </footer>
+    </main>
   );
 }
 
