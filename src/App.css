@@ -59,7 +59,12 @@ main > footer {
   right: 40px;
 }
 
-.Wall > button {
+footer {
+  position: relative;
+  height: var(--logo-height);
+}
+
+footer > button {
   position: absolute;
   height: 50%;
   bottom: 0;
@@ -68,11 +73,11 @@ main > footer {
   border: 0;
 }
 
-.Wall > button:nth-child(1) {
+footer > button:nth-child(1) {
   left: 0;
 }
 
-.Wall > button:nth-child(2) {
+footer > button:nth-child(2) {
   right: 0;
 }
 

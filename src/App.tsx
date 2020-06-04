@@ -57,10 +57,12 @@ function App() {
               </div>
             </form>
           </div>
+          <footer>
+            <button onClick={onEncodeMode}>← Encode</button>
+            <button onClick={onDecodeMode}>Decode →</button>
+          </footer>
 
         </div>
-        <button onClick={onEncodeMode}>← Encode</button>
-        <button onClick={onDecodeMode}>Decode →</button>
       </div>
     </main>
   );
