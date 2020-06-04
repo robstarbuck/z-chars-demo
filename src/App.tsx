@@ -34,34 +34,34 @@ function App() {
 
   return (
     <main>
-      <header>
-      </header>
+
       
       <div className="Wall">
-        <Logo className="Logo" />
         <div className="App">
-          <form className={mode} onSubmit={e => e.preventDefault()}>
-            <div>
-              <textarea className="encode" onChange={onSubjectUpdate} value={subject} />
-            </div>
-            <div>
-              <textarea className="encode" onChange={onEncodeUpdate} value={toEncode} />
-            </div>
-            <div>
-              <textarea className="copy" value={toCopy} readOnly/>
-              <button>Copy</button>
-            </div>
-            <div>
-              <textarea className="decode" onChange={onDecodeUpdate} value={toDecode} />
-            </div>
-          </form>
-        </div>
-      </div>
+          <Logo className="Logo" />
 
-      <footer>
+          <div className="formWrapper">
+            <form className={mode} onSubmit={e => e.preventDefault()}>
+              <div>
+                <textarea className="encode" onChange={onSubjectUpdate} value={subject} />
+              </div>
+              <div>
+                <textarea className="encode" onChange={onEncodeUpdate} value={toEncode} />
+              </div>
+              <div>
+                <textarea className="copy" value={toCopy} readOnly/>
+                <button>Copy</button>
+              </div>
+              <div>
+                <textarea className="decode" onChange={onDecodeUpdate} value={toDecode} />
+              </div>
+            </form>
+          </div>
+
+        </div>
         <button onClick={onEncodeMode}>← Encode</button>
         <button onClick={onDecodeMode}>Decode →</button>
-      </footer>
+      </div>
     </main>
   );
 }

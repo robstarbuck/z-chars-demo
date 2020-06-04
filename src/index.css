@@ -1,3 +1,9 @@
+:root {
+  --header-footer: 140px;
+  --gutter: 20px;
+  --logo-height: calc(var(--header-footer) - var(--gutter) * 2);
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
