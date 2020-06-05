@@ -6,6 +6,13 @@ import { encode, decode } from 'z-chars';
 
 // 305 471
 
+const placeholders = {
+  message: "A message that can be seen",
+  hidden: "A hidden message",
+  decoded: "The decoded message",
+  encoded: "Message with hidden message"
+}
+
 function App() {
 
   const [mode, setMode] = useState<"encode" | "decode">("encode");
@@ -35,7 +42,6 @@ function App() {
   return (
     <main>
 
-      
       <div className="Wall">
         <div className="App">
           <Logo className="Logo" />
@@ -43,17 +49,31 @@ function App() {
           <div className="formWrapper">
             <form className={mode} onSubmit={e => e.preventDefault()}>
               <div>
-                <textarea className="encode" onChange={onSubjectUpdate} value={subject} />
+                <textarea
+                  placeholder={placeholders.message}
+                  className="encode"
+                  onChange={onSubjectUpdate}
+                  value={subject} />
               </div>
               <div>
-                <textarea className="encode" onChange={onEncodeUpdate} value={toEncode} />
+                <textarea
+                  placeholder={placeholders.hidden}
+                  className="encode"
+                  onChange={onEncodeUpdate}
+                  value={toEncode} />
               </div>
               <div>
-                <textarea className="copy" value={toCopy} readOnly/>
+                <textarea placeholder={mode === "decode" ? placeholders.decoded : placeholders.encoded}
+                  className="copy"
+                  value={toCopy}
+                  readOnly />
                 <button>Copy</button>
               </div>
               <div>
-                <textarea className="decode" onChange={onDecodeUpdate} value={toDecode} />
+                <textarea
+                  className="decode"
+                  onChange={onDecodeUpdate}
+                  value={toDecode} />
               </div>
             </form>
           </div>

@@ -61,7 +61,7 @@ main > footer {
 
 footer {
   position: relative;
-  height: var(--logo-height);
+  height: var(--button-height);
 }
 
 footer > button {
@@ -100,7 +100,7 @@ form > * {
 button {
 	border: 10px solid lightgray;
 	border-radius: 20px;
-	min-height: 80px;
+	min-height: var(--button-height);
 	display: block;
 	/* width: 100%; */
 	color: lightgray;
