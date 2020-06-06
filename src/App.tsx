@@ -7,10 +7,10 @@ import { encode, decode } from 'z-chars';
 // 305 471
 
 const placeholders = {
-  message: "A message that can be seen",
+  message: "The original message",
   hidden: "A hidden message",
   decoded: "The decoded message",
-  encoded: "Message with hidden message"
+  encoded: "Hidden message encoded in original"
 }
 
 function App() {
