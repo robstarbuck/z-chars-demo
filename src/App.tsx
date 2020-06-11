@@ -2,15 +2,16 @@ import React, { useState, ChangeEvent, useEffect } from 'react';
 import { ReactComponent as Logo } from './z-chars-logo.svg';
 import './App.css';
 
-import { encode, decode } from 'z-chars';
+import { encode, decode, canEncode, errors, ErrorLevel } from 'z-chars';
 
 // 305 471
 
 const placeholders = {
-  message: "The original message",
-  hidden: "A hidden message",
-  decoded: "The decoded message",
-  encoded: "Hidden message encoded in original"
+  original: "A. The original message",
+  hidden: "B. A hidden message",
+  encodeResult: "C. The original plus the encoded message\n(A+B)",
+  decodeResult: "D. The decoded message",
+  encoded: "E. An encoded message\n(Contents of C)",
 }
 
 function App() {
@@ -21,7 +22,28 @@ function App() {
   const [toEncode, setToEncode] = useState("");
   const [toDecode, setToDecode] = useState("");
 
+  const [errorCode, setError] = useState<keyof typeof errors>();
+
   const [toCopy, setToCopy] = useState("");
+
+  useEffect(() => {
+    if (mode === "encode") {
+      const onError = (code: typeof errorCode) => code && errors[code].level > ErrorLevel.INFO
+        ? setError(code) : undefined;
+      const subjectTrimmed = subject.trim();
+      const encodeTrimmed = toEncode.trim();
+
+      if (canEncode(subjectTrimmed, encodeTrimmed, onError)) {
+        setError(undefined);
+        setToCopy(encode(subjectTrimmed, encodeTrimmed));
+      }
+
+    }
+    if (mode === "decode") {
+      setToCopy(decode(toDecode));
+    }
+  }, [mode, subject, toEncode, toDecode, errorCode])
+
 
   const onEncodeMode = () => setMode("encode");
   const onDecodeMode = () => setMode("decode");
@@ -30,14 +52,10 @@ function App() {
   const onEncodeUpdate = (e: ChangeEvent<HTMLTextAreaElement>) => setToEncode(e.currentTarget.value);
   const onDecodeUpdate = (e: ChangeEvent<HTMLTextAreaElement>) => setToDecode(e.currentTarget.value);
 
-  useEffect(() => {
-    if (mode === "encode") {
-      setToCopy(encode(subject.trim(), toEncode.trim()));
-    }
-    if (mode === "decode") {
-      setToCopy(decode(toDecode));
-    }
-  }, [mode, subject, toEncode, toDecode])
+  const error = errorCode && errors[errorCode];
+  const errorSubject = error?.from === "original" ? `⚠ ${error.message}` : undefined;
+  const errorEncoded = error?.from === "hidden" ? `⚠ ${error.message}` : undefined;
+  const errorDecoded = error?.from === "encoded" ? `⚠ ${error.message}` : undefined;
 
   return (
     <main>
@@ -48,32 +66,31 @@ function App() {
 
           <div className="formWrapper">
             <form className={mode} onSubmit={e => e.preventDefault()}>
-              <div>
+              <div className="encode">
                 <textarea
-                  placeholder={placeholders.message}
-                  className="encode"
+                  placeholder={placeholders.original}
                   onChange={onSubjectUpdate}
                   value={subject} />
+                <footer>{errorSubject}</footer>
               </div>
-              <div>
+              <div className="encode">
                 <textarea
                   placeholder={placeholders.hidden}
-                  className="encode"
                   onChange={onEncodeUpdate}
                   value={toEncode} />
+                <footer>{errorEncoded}</footer>
               </div>
-              <div>
-                <textarea placeholder={mode === "decode" ? placeholders.decoded : placeholders.encoded}
-                  className="copy"
+              <div className="copy">
+                <textarea placeholder={mode === "decode" ? placeholders.decodeResult : placeholders.encodeResult}
                   value={toCopy}
                   readOnly />
                 <button>Copy</button>
               </div>
-              <div>
+              <div className="decode">
                 <textarea
-                  className="decode"
                   onChange={onDecodeUpdate}
                   value={toDecode} />
+                <footer>{errorDecoded}</footer>
               </div>
             </form>
           </div>
