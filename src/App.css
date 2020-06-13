@@ -109,6 +109,11 @@ button {
   margin-left: auto;
   font-family: 'Inter', sans-serif;
   font-size: 20px;
+  cursor: pointer;
+}
+
+button[disabled] {
+  cursor: initial;
 }
 
 form.encode {
@@ -158,4 +163,14 @@ textarea {
   color: white;
   width: 100%;
   margin-bottom: 20px;
+}
+
+@keyframes blink {
+  from { border-color: lightgray; }
+  50% { border-color: black; }
+  to   { border-color: lightgray; }
+}
+
+textarea.copied {
+  animation-name: blink;
 }

@@ -1,6 +1,8 @@
-import React, { useState, ChangeEvent, useEffect } from 'react';
+import React, { useState, ChangeEvent, useEffect, CSSProperties } from 'react';
 import { ReactComponent as Logo } from './z-chars-logo.svg';
 import './App.css';
+
+import { useCopyToClipboard } from 'react-use';
 
 import { encode, decode, canEncode, errors, ErrorLevel } from 'z-chars';
 
@@ -14,12 +16,23 @@ const placeholders = {
   encoded: "E. An encoded message\n(Contents of C)",
 }
 
+const animationDuration = 100;
+const animationIterationCount = 2;
+
+const copyingStyle: CSSProperties = {
+  animationIterationCount,
+  animationDuration: `${animationDuration}ms`,
+};
+
 function App() {
+
+  const [useCopy, setClipboard] = useCopyToClipboard();
+  const [isCopying, setCopying] = useState(false);
 
   const [mode, setMode] = useState<"encode" | "decode">("encode");
 
-  const [subject, setSubject] = useState("");
-  const [toEncode, setToEncode] = useState("");
+  const [subject, setSubject] = useState("ABC");
+  const [toEncode, setToEncode] = useState("A");
   const [toDecode, setToDecode] = useState("");
 
   const [errorCode, setError] = useState<keyof typeof errors>();
@@ -44,18 +57,26 @@ function App() {
     }
   }, [mode, subject, toEncode, toDecode, errorCode])
 
+  useEffect(() => {
+    if (isCopying) {
+      setClipboard(toCopy);
+      setTimeout(() => setCopying(false), animationDuration * animationIterationCount);
+    }
+  }, [isCopying, toCopy, setClipboard]);
 
   const onEncodeMode = () => setMode("encode");
   const onDecodeMode = () => setMode("decode");
+
+  const onCopy = () => setCopying(true);
 
   const onSubjectUpdate = (e: ChangeEvent<HTMLTextAreaElement>) => setSubject(e.currentTarget.value);
   const onEncodeUpdate = (e: ChangeEvent<HTMLTextAreaElement>) => setToEncode(e.currentTarget.value);
   const onDecodeUpdate = (e: ChangeEvent<HTMLTextAreaElement>) => setToDecode(e.currentTarget.value);
 
   const error = errorCode && errors[errorCode];
-  const errorSubject = error?.from === "original" ? `⚠ ${error.message}` : undefined;
-  const errorEncoded = error?.from === "hidden" ? `⚠ ${error.message}` : undefined;
-  const errorDecoded = error?.from === "encoded" ? `⚠ ${error.message}` : undefined;
+  const errorSubject = error?.from === "original" ? <><span>⚠</span> ${error.message}</> : undefined;
+  const errorEncoded = error?.from === "hidden" ? <><span>⚠</span> ${error.message}</> : undefined;
+  const errorDecoded = error?.from === "encoded" ? <><span>⚠</span> ${error.message}</> : undefined;
 
   return (
     <main>
@@ -82,9 +103,11 @@ function App() {
               </div>
               <div className="copy">
                 <textarea placeholder={mode === "decode" ? placeholders.decodeResult : placeholders.encodeResult}
+                  className={isCopying ? "copied" : undefined}
+                  style={copyingStyle}
                   value={toCopy}
                   readOnly />
-                <button>Copy</button>
+                <button disabled={!toCopy || isCopying} onClick={onCopy}>Copy</button>
               </div>
               <div className="decode">
                 <textarea
