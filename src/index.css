@@ -1,6 +1,8 @@
 :root {
-  --header-footer: 140px;
   --gutter: 20px;
+  --border-width: 10px;
+  --border-gutter: calc(var(--gutter) + var(--border-width));
+  --header-footer: 140px;
   --button-height: 80px;
   --logo-height: calc(var(--header-footer) - var(--gutter) * 2);
 }

@@ -1,4 +1,6 @@
-Font = https://fonts.google.com/specimen/Bebas+Neue?preview.text=Z-CHARS&preview.text_type=custom&query=Bebas
+# TODO
+
+- Render outlines correctly
 
 ---
 

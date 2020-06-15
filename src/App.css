@@ -16,47 +16,19 @@ main {
   display: flex;
   flex-flow: column;
   height: 100vh;
-  overflow: hidden;
-}
-
-main > header {
-  /* width: calc(305px / 5); */
-  flex: 0 0 200px;
-  height: 200px;
-  position: relative;
-}
-
-main > div {
-  position: relative;
-  min-height: 400px;
-  flex: 1;
 }
 
 .Logo {
-  position: absolute;
-  bottom: 100%;
+  width: auto;
   height: var(--logo-height);
-  z-index: 10;
-  width: inherit;
   fill: lightgray !important;
-}
-
-main > footer {
-
-}
-
-.Wall {
-  position: relative;
-  display: flex;
-  align-items: center;
-  margin: var(--header-footer) 0;
+  margin: var(--border-gutter) var(--border-width);
 }
 
 .App {
-  justify-content: center;
-  position: absolute;
-  left: 40px;
-  right: 40px;
+  flex: 1;
+  display: flex;
+  align-items: center;
 }
 
 footer {
@@ -82,7 +54,9 @@ footer > button:nth-child(2) {
 }
 
 .formWrapper {
-  margin: var(--gutter) -20px;
+  padding: 0 40px;
+  overflow: hidden;
+  width: 100%;
 }
 
 form {
@@ -90,6 +64,7 @@ form {
   width: 133.33%;
   position: relative;
   transition: transform ease-out 250ms;
+  margin-bottom: var(--border-gutter);
 }
 
 form > * {
@@ -99,7 +74,9 @@ form > * {
 
 button {
 	border: 10px solid lightgray;
-	border-radius: 20px;
+  border-radius: var(--gutter);
+  border-top-color: white;
+  border-left-color: white; 
 	min-height: var(--button-height);
 	display: block;
 	/* width: 100%; */
@@ -112,16 +89,22 @@ button {
   cursor: pointer;
 }
 
+button:focus,
+button::-moz-focus-inner {
+  outline:none !important;
+  border: 0;
+}
+
 button[disabled] {
   cursor: initial;
 }
 
-form.encode {
+main.encode form {
   /* margin-left: 0%; */
   transform: translate(0%, 0);
 }
 
-form.decode {
+main.decode form {
   /* margin-left: -33.33%; */
   transform: translate(-25%, 0);
 }
@@ -135,34 +118,44 @@ textarea + footer {
   font-size: 20px;
 }
 
-form .encode,
-form .decode {
+main .encode,
+main .decode {
   transition: opacity ease-out 250ms;
 }
 
-form.decode .encode {
+main.decode button.decode,
+main.decode form .encode {
   opacity: 0;
 }
 
-form.encode .decode {
+main.decode button.decode,
+main.encode button.encode {
+  cursor: default;
+}
+
+main.encode button.encode,
+main.encode form .decode {
   opacity: 0;
 }
 
-form .copy textarea {
+textarea[readonly] {
   background-color: black;
+  cursor: default;
 }
 
 textarea {
   opacity: 1;
   border-radius: 20px;
   border: 10px solid lightgray;
+  border-bottom-color: white;
+  border-right-color: white;
   outline: 0;
   min-height: 300px;
   padding: 10px;
   background: rgba(0, 0, 0, 0.5);
   color: white;
   width: 100%;
-  margin-bottom: 20px;
+  margin-bottom: var(--gutter);
 }
 
 @keyframes blink {

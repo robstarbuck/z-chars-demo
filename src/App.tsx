@@ -11,8 +11,8 @@ import { encode, decode, canEncode, errors, ErrorLevel } from 'z-chars';
 const placeholders = {
   original: "A. The original message",
   hidden: "B. A hidden message",
-  encodeResult: "C. The original plus the encoded message\n(A+B)",
-  decodeResult: "D. The decoded message",
+  encode: "C. The original plus the encoded message\n(A+B)",
+  decode: "D. The decoded message",
   encoded: "E. An encoded message\n(Contents of C)",
 }
 
@@ -31,8 +31,8 @@ function App() {
 
   const [mode, setMode] = useState<"encode" | "decode">("encode");
 
-  const [subject, setSubject] = useState("ABC");
-  const [toEncode, setToEncode] = useState("A");
+  const [subject, setSubject] = useState("");
+  const [toEncode, setToEncode] = useState("");
   const [toDecode, setToDecode] = useState("");
 
   const [errorCode, setError] = useState<keyof typeof errors>();
@@ -41,8 +41,12 @@ function App() {
 
   useEffect(() => {
     if (mode === "encode") {
-      const onError = (code: typeof errorCode) => code && errors[code].level > ErrorLevel.INFO
-        ? setError(code) : undefined;
+      const onError = (code: typeof errorCode) => {
+        setToCopy("");
+        if (code && errors[code].level > ErrorLevel.INFO) {
+          setError(code);
+        }
+      }
       const subjectTrimmed = subject.trim();
       const encodeTrimmed = toEncode.trim();
 
@@ -74,55 +78,53 @@ function App() {
   const onDecodeUpdate = (e: ChangeEvent<HTMLTextAreaElement>) => setToDecode(e.currentTarget.value);
 
   const error = errorCode && errors[errorCode];
-  const errorSubject = error?.from === "original" ? <><span>⚠</span> ${error.message}</> : undefined;
-  const errorEncoded = error?.from === "hidden" ? <><span>⚠</span> ${error.message}</> : undefined;
-  const errorDecoded = error?.from === "encoded" ? <><span>⚠</span> ${error.message}</> : undefined;
+  const errorSubject = error?.from === "original" ? <><span>⚠</span> {error.message}</> : undefined;
+  const errorEncoded = error?.from === "hidden" ? <><span>⚠</span> {error.message}</> : undefined;
+  const errorDecoded = error?.from === "encoded" ? <><span>⚠</span> {error.message}</> : undefined;
 
   return (
-    <main>
+    <main className={mode}>
 
-      <div className="Wall">
-        <div className="App">
+      <div className="App">
+
+        <div className="formWrapper">
           <Logo className="Logo" />
-
-          <div className="formWrapper">
-            <form className={mode} onSubmit={e => e.preventDefault()}>
-              <div className="encode">
-                <textarea
-                  placeholder={placeholders.original}
-                  onChange={onSubjectUpdate}
-                  value={subject} />
-                <footer>{errorSubject}</footer>
-              </div>
-              <div className="encode">
-                <textarea
-                  placeholder={placeholders.hidden}
-                  onChange={onEncodeUpdate}
-                  value={toEncode} />
-                <footer>{errorEncoded}</footer>
-              </div>
-              <div className="copy">
-                <textarea placeholder={mode === "decode" ? placeholders.decodeResult : placeholders.encodeResult}
-                  className={isCopying ? "copied" : undefined}
-                  style={copyingStyle}
-                  value={toCopy}
-                  readOnly />
-                <button disabled={!toCopy || isCopying} onClick={onCopy}>Copy</button>
-              </div>
-              <div className="decode">
-                <textarea
-                  onChange={onDecodeUpdate}
-                  value={toDecode} />
-                <footer>{errorDecoded}</footer>
-              </div>
-            </form>
-          </div>
+          <form onSubmit={e => e.preventDefault()}>
+            <div className="encode">
+              <textarea
+                placeholder={placeholders.original}
+                onChange={onSubjectUpdate}
+                value={subject} />
+              <footer>{errorSubject}</footer>
+            </div>
+            <div className="encode">
+              <textarea
+                placeholder={placeholders.hidden}
+                onChange={onEncodeUpdate}
+                value={toEncode} />
+              <footer>{errorEncoded}</footer>
+            </div>
+            <div className="copy">
+              <textarea placeholder={placeholders[mode]}
+                className={isCopying ? "copied" : undefined}
+                style={copyingStyle}
+                value={toCopy}
+                readOnly />
+              <button disabled={!toCopy || isCopying} onClick={onCopy}>Copy</button>
+            </div>
+            <div className="decode">
+              <textarea
+                onChange={onDecodeUpdate}
+                value={toDecode} />
+              <footer>{errorDecoded}</footer>
+            </div>
+          </form>
           <footer>
-            <button onClick={onEncodeMode}>← Encode</button>
-            <button onClick={onDecodeMode}>Decode →</button>
+            <button className="encode" onClick={onEncodeMode}>← Encode</button>
+            <button className="decode" onClick={onDecodeMode}>Decode →</button>
           </footer>
-
         </div>
+
       </div>
     </main>
   );
