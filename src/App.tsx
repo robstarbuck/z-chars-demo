@@ -4,7 +4,7 @@ import './App.css';
 
 import { useCopyToClipboard } from 'react-use';
 
-import { encode, decode, canEncode, errors, ErrorLevel } from 'z-chars';
+import { encodeStatus, decodeStatus, status, ErrorStatus, mustEncode, mustDecode } from 'z-chars';
 
 // 305 471
 
@@ -35,31 +35,44 @@ function App() {
   const [toEncode, setToEncode] = useState("");
   const [toDecode, setToDecode] = useState("");
 
-  const [errorCode, setError] = useState<keyof typeof errors>();
+  const [errorCode, setError] = useState<keyof typeof status>();
 
   const [toCopy, setToCopy] = useState("");
 
   useEffect(() => {
-    if (mode === "encode") {
-      const onError = (code: typeof errorCode) => {
-        setToCopy("");
-        if (code && errors[code].level > ErrorLevel.INFO) {
-          setError(code);
-        }
+    const onError = (code: typeof errorCode) => {
+      setToCopy("");
+      if (code && status[code].level > ErrorStatus.INFO) {
+        console.log(code, code && status[code].level);
+        setError(code);
       }
+    }
+
+    if (mode === "encode") {
       const subjectTrimmed = subject.trim();
       const encodeTrimmed = toEncode.trim();
 
-      if (canEncode(subjectTrimmed, encodeTrimmed, onError)) {
+      const encodeStatusCode = encodeStatus(subjectTrimmed, encodeTrimmed);
+      if (status[encodeStatusCode].valid) {
         setError(undefined);
-        setToCopy(encode(subjectTrimmed, encodeTrimmed));
+        setToCopy(mustEncode(subjectTrimmed, encodeTrimmed));
+      }else{
+        onError(encodeStatusCode);
       }
 
     }
     if (mode === "decode") {
-      setToCopy(decode(toDecode));
+      const decodeStatusCode = decodeStatus(toDecode);
+      if (status[decodeStatusCode].valid) {
+        setError(undefined);
+        setToCopy(mustDecode(toDecode));
+      }else{
+        onError(decodeStatusCode);
+      }
     }
   }, [mode, subject, toEncode, toDecode, errorCode])
+
+  console.log(errorCode);
 
   useEffect(() => {
     if (isCopying) {
@@ -77,10 +90,10 @@ function App() {
   const onEncodeUpdate = (e: ChangeEvent<HTMLTextAreaElement>) => setToEncode(e.currentTarget.value);
   const onDecodeUpdate = (e: ChangeEvent<HTMLTextAreaElement>) => setToDecode(e.currentTarget.value);
 
-  const error = errorCode && errors[errorCode];
-  const errorSubject = error?.from === "original" ? <><span>⚠</span> {error.message}</> : undefined;
-  const errorEncoded = error?.from === "hidden" ? <><span>⚠</span> {error.message}</> : undefined;
-  const errorDecoded = error?.from === "encoded" ? <><span>⚠</span> {error.message}</> : undefined;
+  const error = errorCode && status[errorCode];
+  const errorSubject = error?.errorFrom === "subject" ? <><span>⚠</span> {error.message}</> : undefined;
+  const errorEncoded = error?.errorFrom === "encode" ? <><span>⚠</span> {error.message}</> : undefined;
+  const errorDecoded = error?.errorFrom === "decode" ? <><span>⚠</span> {error.message}</> : undefined;
 
   return (
     <main className={mode}>
