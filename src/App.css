@@ -73,7 +73,7 @@ form > * {
 }
 
 button {
-	border: 10px solid lightgray;
+	border: var(--border-width) solid lightgray;
   border-radius: var(--gutter);
   border-top-color: white;
   border-left-color: white; 
@@ -92,7 +92,6 @@ button {
 button:focus,
 button::-moz-focus-inner {
   outline:none !important;
-  border: 0;
 }
 
 button[disabled] {
@@ -146,7 +145,7 @@ textarea[readonly] {
 textarea {
   opacity: 1;
   border-radius: 20px;
-  border: 10px solid lightgray;
+  border: var(--border-width) solid lightgray;
   border-bottom-color: white;
   border-right-color: white;
   outline: 0;
@@ -155,6 +154,8 @@ textarea {
   background: rgba(0, 0, 0, 0.5);
   color: white;
   width: 100%;
+  font-size: 14px;
+  line-height: 1.2;
   margin-bottom: var(--gutter);
 }
 

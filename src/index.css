@@ -1,6 +1,6 @@
 :root {
   --gutter: 20px;
-  --border-width: 10px;
+  --border-width: 8px;
   --border-gutter: calc(var(--gutter) + var(--border-width));
   --header-footer: 140px;
   --button-height: 80px;

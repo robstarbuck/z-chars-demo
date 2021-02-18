@@ -4,16 +4,16 @@ import './App.css';
 
 import { useCopyToClipboard } from 'react-use';
 
-import { encodeStatus, decodeStatus, status, ErrorStatus, mustEncode, mustDecode } from 'z-chars';
+import { testEncode, testDecode, statusInfo, ErrorStatus, mustEncode, mustDecode } from 'z-chars';
 
 // 305 471
 
 const placeholders = {
-  original: "A. The original message",
-  hidden: "B. A hidden message",
-  encode: "C. The original plus the encoded message\n(A+B)",
-  decode: "D. The decoded message",
-  encoded: "E. An encoded message\n(Contents of C)",
+  subject: "The SUBJECT message",
+  hidden: "A HIDDEN message",
+  encode: "The SUBJECT and HIDDEN message combined",
+  decode: "The decoded message",
+  encoded: "An encoded message containing a HIDDEN message",
 }
 
 const animationDuration = 100;
@@ -24,9 +24,16 @@ const copyingStyle: CSSProperties = {
   animationDuration: `${animationDuration}ms`,
 };
 
+type StatusValue = typeof statusInfo[keyof typeof statusInfo]
+type ErrorValue = typeof statusInfo[Exclude<keyof typeof statusInfo, "OK">]
+
+const showError = (status: StatusValue): status is ErrorValue => {
+  return status.errorFrom ? status.errorLevel > ErrorStatus.INFO : false;
+};
+
 function App() {
 
-  const [useCopy, setClipboard] = useCopyToClipboard();
+  const [, setClipboard] = useCopyToClipboard();
   const [isCopying, setCopying] = useState(false);
 
   const [mode, setMode] = useState<"encode" | "decode">("encode");
@@ -35,44 +42,38 @@ function App() {
   const [toEncode, setToEncode] = useState("");
   const [toDecode, setToDecode] = useState("");
 
-  const [errorCode, setError] = useState<keyof typeof status>();
+  const [statusCode, setStatus] = useState<keyof typeof statusInfo>();
 
   const [toCopy, setToCopy] = useState("");
 
   useEffect(() => {
-    const onError = (code: typeof errorCode) => {
-      setToCopy("");
-      if (code && status[code].level > ErrorStatus.INFO) {
-        console.log(code, code && status[code].level);
-        setError(code);
-      }
-    }
 
     if (mode === "encode") {
+
       const subjectTrimmed = subject.trim();
       const encodeTrimmed = toEncode.trim();
 
-      const encodeStatusCode = encodeStatus(subjectTrimmed, encodeTrimmed);
-      if (status[encodeStatusCode].valid) {
-        setError(undefined);
+      const encodeStatusCode = testEncode(subjectTrimmed, encodeTrimmed);
+      setStatus(encodeStatusCode);
+
+      if (statusInfo[encodeStatusCode].valid) {
         setToCopy(mustEncode(subjectTrimmed, encodeTrimmed));
-      }else{
-        onError(encodeStatusCode);
+      } else {
+        setToCopy("");
       }
 
     }
     if (mode === "decode") {
-      const decodeStatusCode = decodeStatus(toDecode);
-      if (status[decodeStatusCode].valid) {
-        setError(undefined);
+      const decodeStatusCode = testDecode(toDecode);
+      setStatus(decodeStatusCode);
+
+      if (statusInfo[decodeStatusCode].valid) {
         setToCopy(mustDecode(toDecode));
-      }else{
-        onError(decodeStatusCode);
+      } else {
+        setToCopy("");
       }
     }
-  }, [mode, subject, toEncode, toDecode, errorCode])
-
-  console.log(errorCode);
+  }, [mode, subject, toEncode, toDecode, statusCode])
 
   useEffect(() => {
     if (isCopying) {
@@ -90,10 +91,10 @@ function App() {
   const onEncodeUpdate = (e: ChangeEvent<HTMLTextAreaElement>) => setToEncode(e.currentTarget.value);
   const onDecodeUpdate = (e: ChangeEvent<HTMLTextAreaElement>) => setToDecode(e.currentTarget.value);
 
-  const error = errorCode && status[errorCode];
-  const errorSubject = error?.errorFrom === "subject" ? <><span>⚠</span> {error.message}</> : undefined;
-  const errorEncoded = error?.errorFrom === "encode" ? <><span>⚠</span> {error.message}</> : undefined;
-  const errorDecoded = error?.errorFrom === "decode" ? <><span>⚠</span> {error.message}</> : undefined;
+  const status = statusCode ? statusInfo[statusCode] : undefined;
+  const error = (status && showError(status)) ?
+    ({ [status.errorFrom]: <><span>⚠</span> {status.message}</> })
+    : undefined;
 
   return (
     <main className={mode}>
@@ -105,20 +106,21 @@ function App() {
           <form onSubmit={e => e.preventDefault()}>
             <div className="encode">
               <textarea
-                placeholder={placeholders.original}
+                placeholder={placeholders.subject}
                 onChange={onSubjectUpdate}
                 value={subject} />
-              <footer>{errorSubject}</footer>
+              <footer>{error?.subject}</footer>
             </div>
             <div className="encode">
               <textarea
                 placeholder={placeholders.hidden}
                 onChange={onEncodeUpdate}
                 value={toEncode} />
-              <footer>{errorEncoded}</footer>
+              <footer>{error?.encode}</footer>
             </div>
             <div className="copy">
-              <textarea placeholder={placeholders[mode]}
+              <textarea
+                placeholder={placeholders[mode]}
                 className={isCopying ? "copied" : undefined}
                 style={copyingStyle}
                 value={toCopy}
@@ -127,9 +129,10 @@ function App() {
             </div>
             <div className="decode">
               <textarea
+                placeholder={placeholders.encoded}
                 onChange={onDecodeUpdate}
                 value={toDecode} />
-              <footer>{errorDecoded}</footer>
+              <footer>{error?.decode}</footer>
             </div>
           </form>
           <footer>
