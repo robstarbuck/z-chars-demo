@@ -3,17 +3,12 @@
   --border-width: 8px;
   --border-gutter: calc(var(--gutter) + var(--border-width));
   --header-footer: 140px;
-  --button-height: 80px;
+  --button-height: 60px;
   --logo-height: calc(var(--header-footer) - var(--gutter) * 2);
 }
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   background: grey;
 }
 

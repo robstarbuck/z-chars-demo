@@ -79,7 +79,7 @@ button {
   border-left-color: white; 
 	min-height: var(--button-height);
 	display: block;
-	/* width: 100%; */
+	width: 100%;
 	color: lightgray;
 	background: black;
 	padding: 0 30px;

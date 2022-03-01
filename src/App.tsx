@@ -9,9 +9,9 @@ import { testEncode, testDecode, statusInfo, ErrorStatus, mustEncode, mustDecode
 // 305 471
 
 const placeholders = {
-  subject: "The SUBJECT message",
+  subject: "A VISIBLE message",
   hidden: "A HIDDEN message",
-  encode: "The SUBJECT and HIDDEN message combined",
+  encode: "The VISIBLE and HIDDEN message combined",
   decode: "The decoded message",
   encoded: "An encoded message containing a HIDDEN message",
 }
@@ -125,7 +125,9 @@ function App() {
                 style={copyingStyle}
                 value={toCopy}
                 readOnly />
-              <button disabled={!toCopy || isCopying} onClick={onCopy}>Copy</button>
+              <button disabled={!toCopy || isCopying} onClick={onCopy}>
+                Copy {mode === "decode" ? "Decoded" : "Encoded"}
+              </button>
             </div>
             <div className="decode">
               <textarea
