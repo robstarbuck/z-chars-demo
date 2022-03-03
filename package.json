@@ -1,5 +1,6 @@
 {
   "name": "z-chars-demo",
+  "homepage": "https://robstarbuck.github.io/z-chars-demo/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
