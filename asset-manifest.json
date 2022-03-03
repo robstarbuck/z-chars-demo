@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/static/css/main.19d97438.chunk.css",
-    "main.js": "/static/js/main.2e97a483.chunk.js",
-    "main.js.map": "/static/js/main.2e97a483.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.f9c7563f.js",
-    "runtime-main.js.map": "/static/js/runtime-main.f9c7563f.js.map",
-    "static/js/2.8c9ad037.chunk.js": "/static/js/2.8c9ad037.chunk.js",
-    "static/js/2.8c9ad037.chunk.js.map": "/static/js/2.8c9ad037.chunk.js.map",
-    "index.html": "/index.html",
-    "precache-manifest.7b0268fede5f4a24629ca1d4e6869057.js": "/precache-manifest.7b0268fede5f4a24629ca1d4e6869057.js",
-    "service-worker.js": "/service-worker.js",
-    "static/css/main.19d97438.chunk.css.map": "/static/css/main.19d97438.chunk.css.map",
-    "static/js/2.8c9ad037.chunk.js.LICENSE.txt": "/static/js/2.8c9ad037.chunk.js.LICENSE.txt",
-    "static/media/z-chars-logo.562872e1.svg": "/static/media/z-chars-logo.562872e1.svg"
+    "main.css": "/z-chars-demo/static/css/main.19d97438.chunk.css",
+    "main.js": "/z-chars-demo/static/js/main.f12457f8.chunk.js",
+    "main.js.map": "/z-chars-demo/static/js/main.f12457f8.chunk.js.map",
+    "runtime-main.js": "/z-chars-demo/static/js/runtime-main.98a17885.js",
+    "runtime-main.js.map": "/z-chars-demo/static/js/runtime-main.98a17885.js.map",
+    "static/js/2.8c9ad037.chunk.js": "/z-chars-demo/static/js/2.8c9ad037.chunk.js",
+    "static/js/2.8c9ad037.chunk.js.map": "/z-chars-demo/static/js/2.8c9ad037.chunk.js.map",
+    "index.html": "/z-chars-demo/index.html",
+    "precache-manifest.6eb28a30a4fa984d2622cb58faa9cfcc.js": "/z-chars-demo/precache-manifest.6eb28a30a4fa984d2622cb58faa9cfcc.js",
+    "service-worker.js": "/z-chars-demo/service-worker.js",
+    "static/css/main.19d97438.chunk.css.map": "/z-chars-demo/static/css/main.19d97438.chunk.css.map",
+    "static/js/2.8c9ad037.chunk.js.LICENSE.txt": "/z-chars-demo/static/js/2.8c9ad037.chunk.js.LICENSE.txt",
+    "static/media/z-chars-logo.562872e1.svg": "/z-chars-demo/static/media/z-chars-logo.562872e1.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.f9c7563f.js",
+    "static/js/runtime-main.98a17885.js",
     "static/js/2.8c9ad037.chunk.js",
     "static/css/main.19d97438.chunk.css",
-    "static/js/main.2e97a483.chunk.js"
+    "static/js/main.f12457f8.chunk.js"
   ]
 }
