@@ -36,7 +36,10 @@ function App() {
   const [, setClipboard] = useCopyToClipboard();
   const [isCopying, setCopying] = useState(false);
 
-  const [mode, setMode] = useState<"encode" | "decode">("encode");
+  const params = new URLSearchParams(document.location.search);
+  const decodeView = params.get("view") === "decode";
+
+  const [mode, setMode] = useState<"encode" | "decode">(decodeView ? "decode" : "encode");
 
   const [subject, setSubject] = useState("");
   const [toEncode, setToEncode] = useState("");
