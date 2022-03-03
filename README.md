@@ -4,6 +4,8 @@
 
 </p>
 
+[![Build and Deploy](https://github.com/robstarbuck/z-chars-demo/actions/workflows/npm-build-and-deploy.yml/badge.svg)](https://github.com/robstarbuck/z-chars-demo/actions/workflows/npm-build-and-deploy.yml)
+
 A demonstration of steganography using zero-width bidirectional control characters ordinarily used when embedding Hebrew or Arabic text.
 
 # Bookmarks
