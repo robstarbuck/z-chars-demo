@@ -15,7 +15,7 @@
     "react-scripts": "3.4.1",
     "react-use": "^15.2.2",
     "typescript": "~3.7.2",
-    "z-chars": "../z-chars"
+    "z-chars": "https://github.com/robstarbuck/z-chars"
   },
   "scripts": {
     "start": "react-scripts start",

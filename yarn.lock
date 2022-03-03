@@ -11527,5 +11527,6 @@ yargs@^13.3.0:
     y18n "^4.0.0"
     yargs-parser "^13.1.2"
 
-z-chars@../z-chars:
+"z-chars@https://github.com/robstarbuck/z-chars":
   version "1.0.0"
+  resolved "https://github.com/robstarbuck/z-chars#9e93a2f2c6b7fe2aef384903780de783cb300be8"
