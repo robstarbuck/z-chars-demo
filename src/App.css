@@ -166,11 +166,19 @@ textarea.copied {
 }
 
 header {
+  --logo: var(--light-mid);
   display: flex;
   margin: var(--border-gutter) var(--border-width);
   gap: var(--gutter);
   align-items: baseline;
   color: var(--light-mid);
+  position: relative;
+}
+
+header > a {
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 
 header > p {
@@ -180,5 +188,5 @@ header > p {
 .Logo {
   width: auto;
   height: var(--logo-height);
-  fill: var(--light-mid) !important;
+  fill: var(--logo) !important;
 }
