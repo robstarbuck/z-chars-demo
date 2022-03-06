@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "d921270258946e0c7079f9b04ba9dfd4",
+    "revision": "a8dd039983b7f6ff1f541d50def84968",
     "url": "/z-chars-demo/index.html"
   },
   {
-    "revision": "4e9a58514d625141a624",
-    "url": "/z-chars-demo/static/css/main.627e4c2d.chunk.css"
+    "revision": "ebc8354b037d229fd593",
+    "url": "/z-chars-demo/static/css/main.ba062f07.chunk.css"
   },
   {
-    "revision": "362fee471aeb143ea749",
-    "url": "/z-chars-demo/static/js/2.8c9ad037.chunk.js"
+    "revision": "5b4893720badcfa43f51",
+    "url": "/z-chars-demo/static/js/2.fc858f91.chunk.js"
   },
   {
     "revision": "570d362d673dab785e62d2b8563e1118",
-    "url": "/z-chars-demo/static/js/2.8c9ad037.chunk.js.LICENSE.txt"
+    "url": "/z-chars-demo/static/js/2.fc858f91.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "4e9a58514d625141a624",
-    "url": "/z-chars-demo/static/js/main.eae8cad3.chunk.js"
+    "revision": "ebc8354b037d229fd593",
+    "url": "/z-chars-demo/static/js/main.fe131817.chunk.js"
   },
   {
     "revision": "2124ba93d2d4002e9752",
