@@ -7,9 +7,33 @@
   --logo-height: calc(var(--header-footer) - var(--gutter) * 2);
 }
 
+:root {
+  --dark: #191214;
+  --dark-mid: #393332;
+  --mid-dark: #5c5754;
+  --mid: #827e77;
+  --mid-light: #aaa79d;
+  --light-mid: #d4d2c5;
+  --light: #ffffee;
+}
+
+:root {
+
+}
+
 body {
   margin: 0;
-  background: grey;
+  background: var(--mid);
+}
+
+.romantica {
+  --dark: #710000;
+  --dark-mid: #a0162a;
+  --mid-dark: #c83c50;
+  --mid: #e66777;
+  --mid-light: #fb94a0;
+  --light-mid: #ffc6cb;
+  --light: #fff6f5;
 }
 
 code {

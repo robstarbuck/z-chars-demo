@@ -6,8 +6,6 @@ import { useCopyToClipboard } from 'react-use';
 
 import { testEncode, testDecode, statusInfo, ErrorStatus, mustEncode, mustDecode } from 'z-chars';
 
-// 305 471
-
 const placeholders = {
   subject: "A VISIBLE message",
   hidden: "A HIDDEN message",
@@ -38,6 +36,16 @@ function App() {
 
   const params = new URLSearchParams(document.location.search);
   const decodeView = params.get("view") === "decode";
+
+  const forLovers = params.get("romantica") === "si";
+
+  const title = forLovers ?
+  'Steganography per gli amanti 💖' :
+  'Steganography using zero-width characters';
+
+  if(forLovers) {
+    document.body.classList.add('romantica')
+  }
 
   const [mode, setMode] = useState<"encode" | "decode">(decodeView ? "decode" : "encode");
 
@@ -105,7 +113,10 @@ function App() {
       <div className="App">
 
         <div className="formWrapper">
-          <Logo className="Logo" />
+          <header>
+            <Logo className="Logo" />
+            <p>{title}</p>
+          </header>
           <form onSubmit={e => e.preventDefault()}>
             <div className="encode">
               <textarea
