@@ -44,15 +44,30 @@ function App() {
   const params = new URLSearchParams(document.location.search);
   const decodeView = params.get("view") === "decode";
 
-  const forLovers = params.get("romantica") === "si";
+  const setForLovers = params.get("romantica") === "si";
+  const removeForLovers = params.get("romantica") === "non";
+  const forLovers = Boolean(localStorage.getItem('forLovers'));
 
   const title = forLovers
     ? "Steganografia per gli amanti 💖"
     : "Steganography using zero-width characters";
 
-  if (forLovers) {
+  if(forLovers) {
     document.body.classList.add("romantica");
   }
+
+  if (setForLovers) {
+    localStorage.setItem('forLovers', 'true');
+  }
+  if(removeForLovers) {
+    localStorage.removeItem('forLovers');
+  }
+  if(setForLovers || removeForLovers) {
+    params.delete('romantica');
+    const relocateParams = params.toString() ? `?${params}` : '';
+    window.location.href = `${window.location.pathname}${relocateParams}`
+  }
+
 
   const [mode, setMode] = useState<"encode" | "decode">(
     decodeView ? "decode" : "encode"
